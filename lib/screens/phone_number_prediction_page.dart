@@ -108,7 +108,7 @@ class _PhoneNumberCheckPageState extends State<PhoneNumberCheckPage> with Single
                       onPressed: _checkPhoneNumber,
                       child: Text('ពិនិត្យលេខ'),
                       style: ElevatedButton.styleFrom(
-                        primary: Colors.blueAccent,
+                        
                         padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12.0),

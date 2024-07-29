@@ -20,9 +20,9 @@ class MyApp extends StatelessWidget {
           secondary: Colors.amber[800], // Replaces accentColor
         ),
         textTheme: TextTheme(
-          bodyText1: TextStyle(color: Colors.black87),
-          bodyText2: TextStyle(color: Colors.black54),
-          headline1: TextStyle( // Updated from headline6
+          bodyLarge: TextStyle(color: Colors.black87), // Updated parameter
+          bodyMedium: TextStyle(color: Colors.black54), // Updated parameter
+          displayLarge: TextStyle( // Updated parameter
             color: Colors.amber[800],
             fontSize: 20,
             fontWeight: FontWeight.bold,
