@@ -21,7 +21,8 @@ class PhoneNumberCheckPage extends StatefulWidget {
 
 class _PhoneNumberCheckPageState extends State<PhoneNumberCheckPage> with SingleTickerProviderStateMixin {
   final TextEditingController _phoneNumberController = TextEditingController();
-  String _result = '';
+  String _prediction = '';
+  String _details = '';
   late AnimationController _animationController;
   late Animation<double> _animation;
 
@@ -49,12 +50,14 @@ class _PhoneNumberCheckPageState extends State<PhoneNumberCheckPage> with Single
     if (response.statusCode == 200) {
       final responseData = json.decode(response.body);
       setState(() {
-        _result = responseData['prediction'] ?? responseData['error'];
+        _prediction = responseData['prediction'] ?? 'មានបញ្ហាក្នុងការពិនិត្យលេខទូរស័ព្ទ';
+        _details = responseData['details'] ?? '';
         _animationController.forward(from: 0.0);
       });
     } else {
       setState(() {
-        _result = 'មានបញ្ហាក្នុងការពិនិត្យលេខទូរស័ព្ទ';
+        _prediction = 'មានបញ្ហាក្នុងការពិនិត្យលេខទូរស័ព្ទ';
+        _details = '';
         _animationController.reverse(from: 1.0);
       });
     }
@@ -108,7 +111,6 @@ class _PhoneNumberCheckPageState extends State<PhoneNumberCheckPage> with Single
                       onPressed: _checkPhoneNumber,
                       child: Text('ពិនិត្យលេខ'),
                       style: ElevatedButton.styleFrom(
-                        
                         padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12.0),
@@ -121,7 +123,7 @@ class _PhoneNumberCheckPageState extends State<PhoneNumberCheckPage> with Single
                       opacity: _animation,
                       child: ScaleTransition(
                         scale: _animation,
-                        child: _result.isNotEmpty
+                        child: _prediction.isNotEmpty
                             ? Container(
                                 padding: EdgeInsets.all(16),
                                 decoration: BoxDecoration(
@@ -135,14 +137,31 @@ class _PhoneNumberCheckPageState extends State<PhoneNumberCheckPage> with Single
                                     ),
                                   ],
                                 ),
-                                child: Text(
-                                  _result,
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    color: Colors.blueAccent,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                  textAlign: TextAlign.center,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                                  children: [
+                                    Text(
+                                      _prediction,
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        color: Colors.blueAccent,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    if (_details.isNotEmpty) 
+                                      Padding(
+                                        padding: const EdgeInsets.only(top: 12.0),
+                                        child: Text(
+                                          _details,
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            color: Colors.blueAccent[700],
+                                          ),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ),
+                                  ],
                                 ),
                               )
                             : SizedBox.shrink(),
