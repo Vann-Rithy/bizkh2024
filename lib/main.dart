@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
         textTheme: TextTheme(
           bodyText1: TextStyle(color: Colors.black87),
           bodyText2: TextStyle(color: Colors.black54),
-          headline6: TextStyle(
+          headline1: TextStyle( // Updated from headline6
             color: Colors.amber[800],
             fontSize: 20,
             fontWeight: FontWeight.bold,
@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
         appBarTheme: AppBarTheme(
           color: Colors.amber[700],
           elevation: 0,
-          toolbarTextStyle: TextStyle(
+          titleTextStyle: TextStyle(
             color: Colors.white,
             fontSize: 20,
             fontWeight: FontWeight.bold,
@@ -50,7 +50,7 @@ class MyApp extends StatelessWidget {
           unselectedItemColor: Colors.black54,
         ),
       ),
-      debugShowCheckedModeBanner: false, 
+      debugShowCheckedModeBanner: false,
       home: MainScreen(),
     );
   }
@@ -80,13 +80,10 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
-      
       appBar: AppBar(
-        
         leading: Padding(
-          padding: const EdgeInsets.all(8.0), // Add padding around the CircleAvatar
+          padding: const EdgeInsets.all(8.0), // Padding around the CircleAvatar
           child: CircleAvatar(
             radius: 20, // Adjust the radius for the desired width
             backgroundImage: AssetImage('assets/profile.jpg'), // Replace with your profile image asset
@@ -95,14 +92,14 @@ class _MainScreenState extends State<MainScreen> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset('./assets/logo.png', width: 45,), // Replace with your logo icon
-            SizedBox(width: 8), // Add spacing between the icon and text
-            Text('ជំនឿ-ជំនួញ', style: TextStyle(fontSize: 20,color: Colors.red)),
+            Image.asset('assets/logo.png', width: 45), // Replace with your logo icon
+            SizedBox(width: 8), // Spacing between the icon and text
+            Text('ជំនឿ-ជំនួញ', style: TextStyle(fontSize: 20, color: Colors.red)),
           ],
         ),
         actions: [
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0), // Add horizontal padding for the notification icon
+            padding: const EdgeInsets.symmetric(horizontal: 16.0), // Horizontal padding for the notification icon
             child: IconButton(
               icon: Icon(Icons.notifications),
               onPressed: () {
@@ -112,7 +109,6 @@ class _MainScreenState extends State<MainScreen> {
           ),
         ],
       ),
-      
       body: _pages[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
