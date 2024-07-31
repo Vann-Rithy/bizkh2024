@@ -21,8 +21,10 @@ class HomePage extends StatelessWidget {
           itemBuilder: (context, index) {
             return Card(
               elevation: 5,
+              color: Color(0xFFFFC107),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12.0),
+               
               ),
               child: InkWell(
                 onTap: () {
@@ -34,15 +36,16 @@ class HomePage extends StatelessWidget {
                     Icon(
                       _getGridItemIcon(index),
                       size: 40,
-                      color: Colors.amber[800],
+                      color: Colors.black,
                     ),
                     SizedBox(height: 10),
                     Text(
                       _getGridItemText(index),
+                  
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
-                        color: Colors.amber[800],
+                        color: Colors.black,
                       ),
                       textAlign: TextAlign.center,
                     ),
