@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'pages/home.dart';
+import 'pages/home.dart'; // Ensure these files contain the respective widgets
 import 'pages/video.dart';
 import 'pages/idea.dart';
 import 'pages/calendar.dart';
 import 'pages/menu.dart';
+import 'pages/splash_screen.dart'; // Import the splash screen
 
 void main() {
   runApp(MyApp());
@@ -14,16 +15,16 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-        primarySwatch: Colors.amber,
+        primarySwatch: Colors.yellow,
         colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.amber,
-          secondary: Colors.amber[800], // Replaces accentColor
+          seedColor: Color(0xFFFFC107),
+          secondary: Color(0xFFFFC107),
         ),
         textTheme: TextTheme(
-          bodyLarge: TextStyle(color: Colors.black87), // Updated parameter
-          bodyMedium: TextStyle(color: Colors.black54), // Updated parameter
-          displayLarge: TextStyle( // Updated parameter
-            color: Colors.amber[800],
+          bodyLarge: TextStyle(color: Colors.black87),
+          bodyMedium: TextStyle(color: Colors.black54),
+          displayLarge: TextStyle(
+            color: Colors.yellow,
             fontSize: 20,
             fontWeight: FontWeight.bold,
           ),
@@ -36,7 +37,7 @@ class MyApp extends StatelessWidget {
         ),
         scaffoldBackgroundColor: Colors.white,
         appBarTheme: AppBarTheme(
-          color: Colors.amber[700],
+          color: Color(0xFFFFC107), // Custom color for AppBar
           elevation: 0,
           titleTextStyle: TextStyle(
             color: Colors.white,
@@ -44,14 +45,59 @@ class MyApp extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
-        bottomNavigationBarTheme: BottomNavigationBarThemeData(
-          backgroundColor: Colors.amber[50],
-          selectedItemColor: Colors.amber[800],
-          unselectedItemColor: Colors.black54,
-        ),
       ),
       debugShowCheckedModeBanner: false,
-      home: MainScreen(),
+      home: SplashScreen(), // Show splash screen initially
+    );
+  }
+}
+
+class SplashScreen extends StatefulWidget {
+  @override
+  _SplashScreenState createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
+  @override
+  void initState() {
+    super.initState();
+    _navigateToMainScreen();
+  }
+
+  void _navigateToMainScreen() async {
+    await Future.delayed(Duration(seconds: 3)); // Show splash screen for 3 seconds
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(builder: (context) => MainScreen()),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            // Centered logo
+            Image.asset('assets/logo.png', width: 150), // Adjust the width as needed
+            SizedBox(height: 20),
+            // Text at the bottom
+            Expanded(
+              child: Align(
+                alignment: Alignment.bottomCenter,
+                child: Text(
+                  'Powered by SME Version 1.0',
+                  style: TextStyle(
+                    color: Colors.black54,
+                    fontSize: 16,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
@@ -83,9 +129,9 @@ class _MainScreenState extends State<MainScreen> {
     return Scaffold(
       appBar: AppBar(
         leading: Padding(
-          padding: const EdgeInsets.all(8.0), // Padding around the CircleAvatar
+          padding: const EdgeInsets.all(8.0),
           child: CircleAvatar(
-            radius: 20, // Adjust the radius for the desired width
+            radius: 20,
             backgroundImage: AssetImage('assets/profile.jpg'), // Replace with your profile image asset
           ),
         ),
@@ -93,13 +139,13 @@ class _MainScreenState extends State<MainScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset('assets/logo.png', width: 45), // Replace with your logo icon
-            SizedBox(width: 8), // Spacing between the icon and text
+            SizedBox(width: 8),
             Text('ជំនឿ-ជំនួញ', style: TextStyle(fontSize: 20, color: Colors.red)),
           ],
         ),
         actions: [
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0), // Horizontal padding for the notification icon
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: IconButton(
               icon: Icon(Icons.notifications),
               onPressed: () {
@@ -110,33 +156,36 @@ class _MainScreenState extends State<MainScreen> {
         ],
       ),
       body: _pages[_selectedIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
+      bottomNavigationBar: Container(
+           // Set background color here
+        child: BottomAppBar(
+          color: Color(0xFFFFC107),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: <Widget>[
+              _buildBottomNavIcon(Icons.home, 0),
+              _buildBottomNavIcon(Icons.video_collection, 1),
+              _buildBottomNavIcon(Icons.lightbulb, 2),
+              _buildBottomNavIcon(Icons.calendar_today, 3),
+              _buildBottomNavIcon(Icons.menu, 4),
+            ],
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.video_collection),
-            label: 'Video',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.lightbulb),
-            label: 'Idea',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.calendar_today),
-            label: 'Calendar',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.menu),
-            label: 'Menu',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.amber[800],
-        unselectedItemColor: Colors.black54,
-        onTap: _onItemTapped,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildBottomNavIcon(IconData icon, int index) {
+    return Container(
+      decoration: BoxDecoration(
+        color: _selectedIndex == index ? Colors.red : Colors.black12,
+        borderRadius: BorderRadius.circular(12.0),
+        
+      ),
+      padding: EdgeInsets.all(2.0),
+      child: IconButton(
+        icon: Icon(icon, color: _selectedIndex == index ? Colors.white : Colors.white),
+        onPressed: () => _onItemTapped(index),
       ),
     );
   }
